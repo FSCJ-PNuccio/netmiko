@@ -1,25 +1,26 @@
-from netmiko import ConnectHandler
-from netmiko.ssh_exception import NetMikoTimeoutException
-from paramiko.ssh_exception import SSHException
-from netmiko.ssh_exception import AuthenticationException
 from getpass import getpass
+from netmiko import ConnectHandler
+from netmiko.exceptions import NetmikoTimeoutException
+from paramiko.ssh_exception import SSHException
+from netmiko.exceptions import NetmikoAuthenticationException
+
 
 user = input('Please enter your username: ')
 secret = getpass('Please enter your password: ')
+
 
 ciscoDevice = {
 	'device_type': 'cisco_ios',
 	'host': '192.168.154.135',
 	'username': user,
 	'password': secret
-
 }
 
 try:
 	connection = ConnectHandler(**ciscoDevice)
-except (NetMikoTimeoutException):
+except (NetmikoTimeoutException):
 	print('The following device timed out: ' + ciscoDevice['host'])
-except (AuthenticationException):
+except (NetmikoAuthenticationException):
 	print('Authentication failure on: ' + ciscoDevice['host'])
 except (SSHException):
 	print('Could not connect to the device with SSH. Check your SSH setings on: ' + ciscoDevice['host'])
