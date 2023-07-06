@@ -4,6 +4,7 @@ This script logs into Cisco devices and saves a copy of the running configuratio
 
 """
 import os
+from netmiko import Netmiko
 from datetime import date
 from getpass import getpass
 from netmiko import ConnectHandler
